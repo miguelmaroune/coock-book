@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs-compat";
 import { AuthResponseData, AuthService } from "./auth.service";
 
@@ -8,7 +9,8 @@ import { AuthResponseData, AuthService } from "./auth.service";
     templateUrl: './auth.component.html'
 })
 export class AuthComponent {
-    constructor(private authService: AuthService){}
+    constructor(private authService: AuthService,
+                private router : Router){}
     isLoginMode = true;
     isLoading = false;
     error: string = null;
@@ -33,6 +35,7 @@ export class AuthComponent {
         authObs.subscribe( (response) => {
             console.log('Response From FireBase : ',response);
             this.isLoading = false;
+            this.router.navigate(['/recipes']);
         }, errorMessage => {
             this.error = errorMessage;
             console.log('Error in Sign UP ',errorMessage);
